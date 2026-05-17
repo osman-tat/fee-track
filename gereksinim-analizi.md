@@ -267,14 +267,16 @@ Başlık : fee-track Hatırlatma
 
 **FR-NOT-04:** Kullanıcı Ayarlar sayfasından bildirimleri tamamen kapatabilir.
 
+**FR-NOT-05 (Tarih Mantığı):** Ödeme günü "31" olarak seçilen durumlar veya 30 çeken aylar (ve özellikle Şubat ayı) için özel bir İş Mantığı (Utility Function) eklenecektir. Eğer girilen ödeme günü mevcut ayın toplam gün sayısını aşıyorsa, tetikleyici olarak o ayın **son günü** (örn. 28 veya 29 Şubat) baz alınarak bildirim zamanlanır.
+
 ---
 
 ### 5.6 Raporlar Modülü
 
 **FR-REP-01:** Raporlar sayfası şu bölümleri içerir:
-1. **Aylık Toplam:** Seçili aya ait tüm giderlerin para birimi bazlı toplamı
-2. **Yıllık Toplam:** Tüm giderlerin yıllık maliyet projeksiyonu
-3. **Kategori Dağılımı:** Her kategorinin toplam tutarı ve yüzdesi
+1. **Aylık Toplam:** Offline yapı gereği çevrimiçi döviz kuru çevirisi yapılmaz; tüm para birimleri alt alta ayrı toplamlar halinde gösterilir (Örn: Toplam: 500 TL + 20 USD + 10 EUR).
+2. **Yıllık Toplam:** Tüm giderlerin yıllık maliyet projeksiyonu (para birimlerine göre ayrı gruplandırılmış halde).
+3. **Kategori Dağılımı:** Her kategorinin para birimi bazlı toplam tutarı.
 4. **PDF İndir:** Özet raporu PDF olarak cihaza kaydeden buton
 
 **FR-REP-02:** Raporlar sayfasında ay seçici bulunur (önceki aylara gidilebilir).
@@ -423,13 +425,17 @@ Uygulama **tamamen çevrimdışı** çalışır. Veritabanı olarak cihaz içi S
 
 ### 8.3 Navigasyon
 
-Üst Tab Bar (TopTabBar) — 5 sekme:
+Alt Tab Bar (Bottom Tab Bar) — 5 sekme:
 
 ```
 ┌────────────────────────────────────────────────────┐
-│  fee-track                                    [+]  │  ← Header (+ sağda)
+│  fee-track                                         │  ← Header
+├────────────────────────────────────────────────────┤
+│                                                    │
+│               (Ekran İçeriği)                      │
+│                                                    │
 ├──────────┬──────────┬────────────┬────────┬────────┤
-│ Ana Sayfa│   Ekle   │ Kategoriler│Raporlar│Ayarlar │  ← Üst Tab Bar
+│ Ana Sayfa│   Ekle   │ Kategoriler│Raporlar│Ayarlar │  ← Alt Tab Bar
 └──────────┴──────────┴────────────┴────────┴────────┘
 ```
 
