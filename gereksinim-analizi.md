@@ -103,13 +103,9 @@ MVP'de tek bir rol vardır: **Standart Kullanıcı**
 
 ## 4. Kullanıcı Hikayeleri
 
-### 4.1 Kimlik Doğrulama
+### 4.1 Kimlik Doğrulama (Kaldırıldı)
 
-| # | Hikaye | Kabul Kriteri |
-|---|--------|---------------|
-| US-01 | Kullanıcı olarak Google hesabımla uygulamaya giriş yapabilmeliyim | Google OAuth akışı tamamlanınca kullanıcı ana sayfaya yönlendirilir |
-| US-02 | Kullanıcı olarak uygulamayı ilk açtığımda "Giriş Yap / Kayıt Ol" seçeneklerini görmeliyim | Splash sonrası auth ekranı açılır |
-| US-03 | Kullanıcı olarak oturumum açık kaldığı sürece tekrar giriş yapmak zorunda kalmamalıyım | Token yenilemesi otomatik yapılır |
+MVP sürümünde tüm işlemler %100 yerel çalıştığı için kimlik doğrulama adımları (US-01, US-02, US-03) projeden çıkarılmıştır. Uygulama açılır açılmaz doğrudan Ana Sayfa'ya yönlendirilir.
 
 ### 4.2 Gider Ekleme
 
@@ -153,8 +149,7 @@ MVP'de tek bir rol vardır: **Standart Kullanıcı**
 
 | # | Hikaye | Kabul Kriteri |
 |---|--------|---------------|
-| US-22 | Kullanıcı olarak internet olmadan da giderlerimi görebilmeliyim | Veriler yerel cache'den okunur |
-| US-23 | İnternet geldiğinde değişikliklerim otomatik senkronize olmalı | Bağlantı sağlanınca Supabase'e yazılır |
+| US-22 | Kullanıcı olarak internet olmadan da tüm işlemlerimi yapabilmeliyim | Veriler her zaman yerel veritabanından (SQLite) okunur ve yazılır |
 
 ---
 
@@ -309,11 +304,9 @@ Uygulama **tamamen çevrimdışı** çalışır. Veritabanı olarak cihaz içi S
 ### 5.8 Ayarlar Modülü
 
 **FR-SET-01:** Ayarlar sayfası şu seçenekleri içerir:
-- Kullanıcı adı ve e-posta (salt okunur, Google'dan)
-- Profil fotoğrafı (Google'dan)
 - Bildirimler açık/kapalı toggle
+- Tüm Verileri Sıfırla (SQLite verilerini temizler)
 - Uygulama hakkında (versiyon, lisans)
-- Çıkış Yap butonu
 
 ---
 
@@ -324,10 +317,9 @@ Uygulama **tamamen çevrimdışı** çalışır. Veritabanı olarak cihaz içi S
 | Gereksinim | Hedef |
 |-----------|-------|
 | Uygulama başlama süresi | < 2 saniye (cold start) |
-| Gider listesi yükleme | < 1 saniye (offline cache'den) |
+| Gider listesi yükleme | < 1 saniye (SQLite'dan anlık okunur) |
 | Gider ekleme formu açılma | < 300ms |
 | PDF oluşturma süresi | < 3 saniye |
-| Senkronizasyon süresi | < 5 saniye (iyi bağlantıda) |
 
 ### 6.2 Kullanılabilirlik
 
@@ -340,7 +332,7 @@ Uygulama **tamamen çevrimdışı** çalışır. Veritabanı olarak cihaz içi S
 
 - Uygulama çökmeden önce en az 8 saatlik kesintisiz kullanımı desteklemelidir
 - Veri kaybı yaşandığında kullanıcı bilgilendirilmeli
-- Supabase kesintisinde offline mod devreye girmeli
+- Uygulama %100 offline (yerel) çalıştığı için harici servis kesintilerinden etkilenmemelidir
 
 ### 6.4 Ölçeklenebilirlik
 
@@ -363,7 +355,6 @@ Uygulama **tamamen çevrimdışı** çalışır. Veritabanı olarak cihaz içi S
 | # | Ekran | Rota | Açıklama |
 |---|-------|------|---------|
 | S-01 | Splash | `/splash` | Logo + yükleme göstergesi |
-| S-02 | Giriş/Kayıt | `/auth` | Google ile giriş butonu |
 | S-03 | Ana Sayfa | `/home` | Gider listesi + kategori filtreler |
 | S-04 | Platform Seç | `/add/platform` | Logo'lu platform listesi |
 | S-05 | Gider Formu | `/add/form` | Yeni gider ekleme formu |
@@ -379,13 +370,6 @@ Uygulama **tamamen çevrimdışı** çalışır. Veritabanı olarak cihaz içi S
       |
       v
 [Splash Ekranı — S-01]
-      |
-      |-- Token var mı? --> EVET --> [Ana Sayfa — S-03]
-      |
-      v (Token yok)
-[Giriş/Kayıt — S-02]
-      |
-[Google ile Giriş]
       |
       v
 [Ana Sayfa — S-03]
@@ -807,9 +791,8 @@ Aşağıdaki özellikler **MVP kapsamında değildir** ve sonraki fazlara bırak
 ### 15.1 Faz 1 — MVP (2 Gün)
 
 **Gün 1:**
-- [ ] Proje kurulumu (React Native + Supabase bağlantısı)
-- [ ] Google Auth akışı
-- [ ] Veritabanı şeması (users, categories, platforms, expenses)
+- [ ] Proje kurulumu (React Native + Local SQLite)
+- [ ] Veritabanı şeması (categories, platforms, expenses)
 - [ ] Gider ekleme formu (platform listesi + özel gider)
 - [ ] Ana sayfa gider listesi
 
@@ -817,7 +800,6 @@ Aşağıdaki özellikler **MVP kapsamında değildir** ve sonraki fazlara bırak
 - [ ] Kategori filtreleme ve sıralama
 - [ ] Push notification (ödeme hatırlatma)
 - [ ] Raporlar sayfası + PDF export
-- [ ] Offline cache entegrasyonu
 - [ ] Ayarlar sayfası
 - [ ] Manuel test + bug fix
 
