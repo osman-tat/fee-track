@@ -267,7 +267,7 @@ Başlık : fee-track Hatırlatma
 
 **FR-NOT-04:** Kullanıcı Ayarlar sayfasından bildirimleri tamamen kapatabilir.
 
-**FR-NOT-05 (Tarih Mantığı):** Ödeme günü "31" olarak seçilen durumlar veya 30 çeken aylar (ve özellikle Şubat ayı) için özel bir İş Mantığı (Utility Function) eklenecektir. Eğer girilen ödeme günü mevcut ayın toplam gün sayısını aşıyorsa, tetikleyici olarak o ayın **son günü** (örn. 28 veya 29 Şubat) baz alınarak bildirim zamanlanır.
+**FR-NOT-05 (Tarih Mantığı & Tekrarlı Bildirimler):** Notifee'nin yerleşik aylık tekrar (RepeatInterval.MONTHLY) mekanizması, ay sonu günlerinde (örn. 31 çeken aylar ve Şubat) sorun yaratabildiği için kullanılmayacaktır. Bunun yerine, uygulama her açıldığında (veya bir gider eklendiğinde/düzenlendiğinde), aktif giderler için önümüzdeki 3 ayın bildirimleri (ilgili ayın maksimum gün sayısı dikkate alınarak) hesaplanıp tekil (one-off) bildirimler olarak sisteme zamanlanacaktır (schedule).
 
 ---
 
@@ -425,20 +425,21 @@ Uygulama **tamamen çevrimdışı** çalışır. Veritabanı olarak cihaz içi S
 
 ### 8.3 Navigasyon
 
-Alt Tab Bar (Bottom Tab Bar) — 5 sekme:
+Alt Tab Bar (Bottom Tab Bar) — 4 sekme:
 
-```
+```text
 ┌────────────────────────────────────────────────────┐
-│  fee-track                                         │  ← Header
+│  fee-track                                    [+]  │  ← Header (+ sağda)
 ├────────────────────────────────────────────────────┤
 │                                                    │
 │               (Ekran İçeriği)                      │
 │                                                    │
-├──────────┬──────────┬────────────┬────────┬────────┤
-│ Ana Sayfa│   Ekle   │ Kategoriler│Raporlar│Ayarlar │  ← Alt Tab Bar
-└──────────┴──────────┴────────────┴────────┴────────┘
+├──────────────┬──────────────┬──────────────┬───────┤
+│   Ana Sayfa  │  Kategoriler │   Raporlar   │Ayarlar│  ← Alt Tab Bar
+└──────────────┴──────────────┴──────────────┴───────┘
 ```
 
+- **Not:** UX bütünlüğü ve ferah bir alt menü tasarımı için "Ekle" sekmesi kaldırılmıştır. Gider ekleme akışı doğrudan sağ üstteki `[+]` ikonuna basılarak başlatılır.
 - Aktif sekme vurgu rengi: `#2196F3` (mavi)
 - Pasif sekme rengi: `#9E9E9E` (gri)
 
@@ -789,6 +790,7 @@ Aşağıdaki özellikler **MVP kapsamında değildir** ve sonraki fazlara bırak
 | R-04 | @op-sqlite kurulum sorunu (native bağımlılık) | Düşük | Orta | `expo-sqlite` alternatif olarak hazırda tutulur |
 | R-05 | Android bildirim izni reddi | Orta | Düşük | Uygulama bildirim olmadan da tam işlevsel çalışır |
 | R-06 | Play Store yayın süreci gecikmesi | Orta | Orta | İlk test için APK doğrudan dağıtılır |
+| R-07 | react-native-html-to-pdf kütüphanesinin RN 0.74 ile derleme hatası verme riski | Yüksek | Orta | Hata durumunda vakit kaybedilmez; PDF özelliği Faz 2'ye aktarılır veya JS tabanlı (ör. Expo Print) alternatif kullanılır |
 
 ---
 
