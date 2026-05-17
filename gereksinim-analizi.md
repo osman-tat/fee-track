@@ -338,8 +338,8 @@ Uygulama **tamamen çevrimdışı** çalışır. Veritabanı olarak cihaz içi S
 
 ### 6.4 Ölçeklenebilirlik
 
-- Supabase free tier ile başlar; 300 kullanıcıya kadar yeterlidir
-- 500+ kullanıcıda Supabase Pro'ya geçiş planlanmalı
+- Uygulama tamamen cihaz kaynaklarını (yerel veritabanı) kullandığı için kullanıcı sayısı veya sunucu maliyeti sınırı yoktur.
+- SQLite veritabanı on binlerce gider kaydını bile performans sorunu olmadan işleyebilir.
 
 ### 6.5 Bakım ve Geliştirilebilirlik
 
@@ -363,7 +363,7 @@ Uygulama **tamamen çevrimdışı** çalışır. Veritabanı olarak cihaz içi S
 | S-06 | Gider Detay | `/expense/:id` | Mevcut gider görüntüleme/düzenleme |
 | S-07 | Kategoriler | `/categories` | Kategoriye göre gruplandırılmış özet |
 | S-08 | Raporlar | `/reports` | Toplam, dağılım, PDF export |
-| S-09 | Ayarlar | `/settings` | Profil, bildirim, çıkış |
+| S-09 | Ayarlar | `/settings` | Bildirim ve veri sıfırlama ayarları |
 
 ### 7.2 Kullanıcı Akış Diyagramı
 
